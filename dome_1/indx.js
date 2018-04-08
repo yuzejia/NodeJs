@@ -10,9 +10,6 @@ const gbk = require('gbk');
 //cheerio  jquery DOM 操作
 const cheerio = require('cheerio');
 
-
-
-
 function GetUrl(sUrl,success){
 	index++;
 	var urlObj = url.parse(sUrl);
@@ -22,20 +19,13 @@ function GetUrl(sUrl,success){
 	}
 	else{
 		http = require('https');
-	}
-
-
-		
+	}		
 
 	let req = http.request({
-
 		'hostname':urlObj.hostname,
 		'path':urlObj.path
-
 	},res=>{	
-
 		console.log(res.statusCode)
-
 		if(res.statusCode == 200){
 			var arr = [];
 			var str = '';
@@ -51,29 +41,21 @@ function GetUrl(sUrl,success){
 			console.log(`我是第${index}次重定向`,res.headers.location);
 			GetUrl(res.headers.location,success)
 		}
-	
 	});
-
 	req.end();
 	req.on('error',()=>{
 		console.log('404了，哥们');
 	})
-
-
-
 }
 
 
 
 GetUrl('hgttp://neihanshequ.com/',data=>{
 	var http = require('http')
-
 	// var html = gbk.toString('utf-8',data);
 	let $ = cheerio.load(data,{decodeEntities: false})
-
 	// let DOM = new JSDOM(data);
 	// let document = DOM.window.document;
-
 		var JsonArry =  [
 			{
 				header :{
@@ -83,7 +65,6 @@ GetUrl('hgttp://neihanshequ.com/',data=>{
 					dateTime:'',
 				},
 				content:{
-
 				},
 			}
 	]
@@ -95,14 +76,11 @@ GetUrl('hgttp://neihanshequ.com/',data=>{
 			imgUrl,   // 图片链接
 			name,	  // 用户名
 			dateTime, // 发布时间
-
 			conterUrl, //内容链接
 			conterText//内容数据
-
 		var list   = $(this);
 		var header = list.find('.header');
 		var content = list.find('.content-wrapper');
-
 		// header
 		 url    = header.children('a').attr('href');
 		 imgUrl = header.children('a').children('img').attr('data-src');
@@ -111,7 +89,6 @@ GetUrl('hgttp://neihanshequ.com/',data=>{
 		 // content
 		 conterUrl = content.children('a').attr('href');
 		 conterText = content.children('a').children('.upload-txt').children('h1').children('p').html();
-
 		 // header 頭部數據
 		let headerObj = {
 				url: url,
@@ -119,18 +96,15 @@ GetUrl('hgttp://neihanshequ.com/',data=>{
 				name:name,
 				dateTime:dateTime,
 		}
-
 		// 內容區域
 		let conter = {
 			conterUrl:conterUrl,
 			conterText:conterText
 		}
-
 		let listObj = {
 			header:headerObj,
 			content:conter
 		}
-
 		listData.push(listObj)
 	});
 		var list_obj = {
