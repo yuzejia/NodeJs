@@ -35,6 +35,11 @@ function GetUrl(sUrl,success){
 			});
 			res.on('end',()=>{
 				// let b = Buffer.concat(arr);
+				fs.mkdir('D:/yzj/study/node/dist/', function (err) {
+				     if (err) return console.error(err);
+				     console.log('目录创建成功');
+				 });
+				fs.writeFileSync('D:/yzj/study/node/dist/test1.js',JSON.stringify(str,null, '\t'));
 				success && success(str);
 			});
 		}else if(res.statusCode == 302 || res.statusCode == 301){
@@ -50,7 +55,7 @@ function GetUrl(sUrl,success){
 
 
 
-GetUrl('hgttp://neihanshequ.com/',data=>{
+GetUrl('https://www.jianshu.com/',data=>{
 	var http = require('http')
 	// var html = gbk.toString('utf-8',data);
 	let $ = cheerio.load(data,{decodeEntities: false})
@@ -70,7 +75,8 @@ GetUrl('hgttp://neihanshequ.com/',data=>{
 	]
 
 	var listData = []
-	let content = $('.content-wrapper>div>ul>li');
+	
+	let content = $('#list-container>ul>li');
 	content.each( function(element, index) {
 		let url,      // 用戶链接
 			imgUrl,   // 图片链接
@@ -79,16 +85,14 @@ GetUrl('hgttp://neihanshequ.com/',data=>{
 			conterUrl, //内容链接
 			conterText//内容数据
 		var list   = $(this);
-		var header = list.find('.header');
-		var content = list.find('.content-wrapper');
+		var header = list.find('.wrap-img');
+		var content = list.find('.content');
 		// header
 		 url    = header.children('a').attr('href');
 		 imgUrl = header.children('a').children('img').attr('data-src');
-		 name   = header.children('a').children('.name-time-wrapper').children('.name').html();
-		 dateTime   = header.children('a').children('.name-time-wrapper').children('.timeago').html().replace(/\n|\t/g,"");
+		 name   = content.children('.title').html();
 		 // content
 		 conterUrl = content.children('a').attr('href');
-		 conterText = content.children('a').children('.upload-txt').children('h1').children('p').html();
 		 // header 頭部數據
 		let headerObj = {
 				url: url,
@@ -107,11 +111,12 @@ GetUrl('hgttp://neihanshequ.com/',data=>{
 		}
 		listData.push(listObj)
 	});
+
+console.log(content)
 		var list_obj = {
 			data:listData
 		}
 		
-		fs.writeFileSync('E:/项目/node/抓包/test1.js',JSON.stringify(listData,null, '\t'));
+	fs.writeFileSync('D:/yzj/study/node/dist/test1.js',JSON.stringify(listData,null, '\t'));
 
 })
-
