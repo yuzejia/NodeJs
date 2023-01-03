@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +8,19 @@
 </head>
 <body>
     <input type="file" onchange="fileChange(event)">
+    
+    <div id="content">
+
+    </div>
 
     <script>
+        const box = document.getElementById('content')
         const fileChange = (e)=> {
-            console.log(e);
+            box.innerHTML = 'success'
+            console.log(e.target.files[0]);
+            setTimeout(() => {
+                box.innerHTML = JSON.stringify(e.target.files[0].name);
+            }, 1000);
         }
     </script>
 </body>
