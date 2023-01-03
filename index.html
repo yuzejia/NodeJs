@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="./vconsole.min.js"> </script>
 </head>
 <body>
     <input type="file" onchange="fileChange(event)">
@@ -14,6 +15,8 @@
     </div>
 
     <script>
+         var vConsole = new VConsole();
+         console.log('Hello world');
         const box = document.getElementById('content')
         const fileChange = (e)=> {
             box.innerHTML = 'success'
