@@ -8,7 +8,7 @@
     <script src="./vconsole.min.js"> </script>
 </head>
 <body>
-    <input type="file" onchange="fileChange(event)">
+    <input type="file" id="unloadBtn" onchange="fileChange(this)">
     
     <div id="content">
 
@@ -19,8 +19,9 @@
          console.log('Hello world');
         const box = document.getElementById('content')
         const fileChange = (e)=> {
+            var file = document.getElementById("unloadBtn").files;
+            console.log(file);
             box.innerHTML = 'success'
-            console.log(e.target.files[0]);
             setTimeout(() => {
                 box.innerHTML = JSON.stringify(e.target.files[0].name);
             }, 1000);
